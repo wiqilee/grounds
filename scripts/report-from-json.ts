@@ -25,11 +25,22 @@ function parseArgs(): Args {
 
 async function maybePDF(htmlPath: string) {
   try {
-    const { chromium } = await import("playwright");
-    const browser = await chromium.launch();
+    const puppeteer = await import("puppeteer-core");
+    const chromium = await import("@sparticuz/chromium");
+    
+    const executablePath = await chromium.default.executablePath();
+    
+    const browser = await puppeteer.default.launch({
+      args: chromium.default.args,
+      defaultViewport: { width: 1200, height: 800 },
+      executablePath,
+      headless: true,
+    });
+    
     const page = await browser.newPage();
     const html = fs.readFileSync(htmlPath, "utf-8");
     await page.setContent(html, { waitUntil: "load" });
+    
     const pdfPath = htmlPath.replace(/\.html$/i, ".pdf");
     await page.pdf({
       path: pdfPath,
@@ -37,10 +48,11 @@ async function maybePDF(htmlPath: string) {
       printBackground: true,
       margin: { top: "18mm", bottom: "18mm", left: "14mm", right: "14mm" },
     });
+    
     await browser.close();
     console.log("PDF written:", pdfPath);
   } catch (e) {
-    console.warn("PDF export skipped. Install Playwright to enable it.");
+    console.warn("PDF export skipped. Install puppeteer-core and @sparticuz/chromium to enable it.");
     console.warn(String(e));
   }
 }
