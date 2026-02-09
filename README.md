@@ -11,6 +11,12 @@
 
 **Transform complex decisions into clear, auditable outcomes.**
 
+### 🚀 [Live Demo](https://grounds-chi.vercel.app) 
+
+[![Try Grounds](https://img.shields.io/badge/Try%20it%20Now-grounds--chi.vercel.app-00D4AA?style=for-the-badge&logo=vercel&logoColor=white)](https://grounds-chi.vercel.app)
+
+### ▶️ [Youtube](https://youtu.be/auDm0d9Ea2o)
+
 [Features](#-features) • [Quick Start](#-quick-start) • [Architecture](#-how-it-works) • [API Reference](#-api-reference)
 
 ---
