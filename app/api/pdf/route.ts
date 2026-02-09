@@ -163,7 +163,10 @@ export async function POST(req: Request) {
         // ignore
       }
 
-      return new NextResponse(pdf, {
+      // Convert Buffer to Uint8Array for NextResponse compatibility
+      const pdfBytes = new Uint8Array(pdf);
+
+      return new NextResponse(pdfBytes, {
         headers: {
           "Content-Type": "application/pdf",
           "Content-Disposition": `inline; filename="${filename}.pdf"`,
@@ -171,7 +174,7 @@ export async function POST(req: Request) {
           "X-Grounds-PDF-Attempt": String(attempt + 1),
         },
       });
-    } catch (e: any) {
+    } catch (e: unknown) {
       lastErr = e;
 
       if (browser) {
@@ -186,7 +189,7 @@ export async function POST(req: Request) {
     }
   }
 
-  const msg = String((lastErr as any)?.message ?? lastErr ?? "Unknown error");
+  const msg = String((lastErr as Error)?.message ?? lastErr ?? "Unknown error");
 
   const isTimeout = /timeout/i.test(msg);
   const isOOM = /out of memory|oom|memory/i.test(msg);
