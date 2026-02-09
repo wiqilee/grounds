@@ -1,0 +1,28 @@
+{
+  "title": "Grounds: ship a public demo",
+  "context": "We want a premium-looking demo that generates a decision-grade report people can share. The product should avoid domain-specific language and work globally. The UI should feel alive: micro-motion, hover color shifts, and calm typography.",
+  "intent": "Build a v0.1 that reliably produces a polished HTML report and optional PDF export. Include 2026-ready signals (half-life, blind spots, perspective shift) without sounding robotic.",
+  "options": [
+    "Ship minimal: one page + simple report",
+    "Ship full: report + ledger export + 2026 signals",
+    "Delay: polish longer and risk never shipping"
+  ],
+  "assumptions": [
+    "People want a short briefing, not a wall of text",
+    "A transparent heuristic score is enough for an MVP",
+    "Offline HTML reports are universally shareable"
+  ],
+  "risks": [
+    "Scope creep: adding too much too early",
+    "UI feels like a dashboard instead of a premium brief",
+    "Report reads generic (not decision-grade)"
+  ],
+  "evidence": [
+    "A complete report template with consistent tone",
+    "Deterministic scoring rules (readiness, half-life, blind spots)",
+    "A clear set of lenses for perspective shift"
+  ],
+  "confidence": "medium",
+  "createdAtISO": "2025-12-29T11:34:20.803665Z",
+  "outcome": ""
+}

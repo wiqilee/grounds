@@ -1,0 +1,652 @@
+/* app/globals.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------- Base / Reset ---------------- */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+/*
+  IMPORTANT:
+  - Theme is controlled by <html class="dark"> from Shell
+  - Do NOT hardcode dark styles here
+*/
+
+/* ---------------- Theme Variables ---------------- */
+
+/* LIGHT (default) */
+:root {
+  color-scheme: light;
+
+  --bg0: 248, 250, 252; /* slate-50 */
+  --bg1: 241, 245, 249; /* slate-100 */
+  --fg: 15, 23, 42; /* slate-900 */
+
+  --a: 14, 165, 233; /* sky */
+  --b: 139, 92, 246; /* violet */
+  --c: 244, 63, 94; /* rose */
+  --d: 16, 185, 129; /* emerald */
+
+  /* Light surfaces */
+  --card: 255, 255, 255;
+  --card2: 248, 250, 252;
+  --stroke: 15, 23, 42;
+}
+
+/* DARK */
+html.dark {
+  color-scheme: dark;
+
+  --bg0: 9, 10, 18;
+  --bg1: 14, 16, 28;
+  --fg: 245, 247, 255;
+
+  --a: 103, 232, 249; /* cyan */
+  --b: 168, 85, 247; /* violet */
+  --c: 251, 113, 133; /* rose */
+  --d: 52, 211, 153; /* emerald */
+
+  /* Dark surfaces (not strictly needed, but keeps parity) */
+  --card: 18, 20, 36;
+  --card2: 14, 16, 28;
+  --stroke: 255, 255, 255;
+}
+
+/* ---------------- Body / Background ---------------- */
+
+html {
+  background: rgb(var(--bg0));
+}
+
+body {
+  position: relative;
+  isolation: isolate;
+  min-height: 100%;
+  margin: 0;
+
+  color: rgb(var(--fg));
+  background-color: rgb(var(--bg0));
+
+  /* Light theme background */
+  background:
+    radial-gradient(1200px 700px at 20% 0%, rgba(var(--a), 0.06), transparent 60%),
+    radial-gradient(1000px 650px at 80% 10%, rgba(var(--b), 0.06), transparent 62%),
+    linear-gradient(180deg, rgb(var(--bg0)), rgb(var(--bg1)));
+}
+
+/* Dark theme background (richer) */
+html.dark body {
+  background:
+    radial-gradient(1100px 650px at 14% 10%, rgba(var(--a), 0.12), transparent 62%),
+    radial-gradient(980px 620px at 78% 16%, rgba(var(--b), 0.11), transparent 64%),
+    radial-gradient(980px 620px at 68% 92%, rgba(var(--d), 0.08), transparent 66%),
+    radial-gradient(900px 560px at 40% 75%, rgba(var(--c), 0.06), transparent 68%),
+    linear-gradient(180deg, rgb(var(--bg0)), rgb(var(--bg1)));
+}
+
+/* ---------------- Motion ---------------- */
+
+@keyframes aurora-drift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  25% { transform: translate3d(-1.5%, 1%, 0) scale(1.03); }
+  50% { transform: translate3d(1.2%, -1.2%, 0) scale(1.06); }
+  75% { transform: translate3d(2%, 1.4%, 0) scale(1.04); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes hue {
+  0% { filter: hue-rotate(0deg) saturate(1.1); }
+  100% { filter: hue-rotate(360deg) saturate(1.1); }
+}
+
+.animate-hue {
+  animation: hue 18s linear infinite;
+}
+
+/* ---------------- Shimmer Animation for Skeleton Loading ---------------- */
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* ---------------- Ripple Effect for Button Clicks ---------------- */
+
+@keyframes ripple {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.5;
+  }
+  100% {
+    width: 200px;
+    height: 200px;
+    opacity: 0;
+  }
+}
+
+.animate-ripple {
+  animation: ripple 0.6s linear forwards;
+}
+
+/* ---------------- Pulse Glow Animation ---------------- */
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+/* ---------------- Bounce In Animation ---------------- */
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.4s ease-out forwards;
+}
+
+/* ---------------- Slide Up Fade Animation ---------------- */
+
+@keyframes slide-up-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up-fade {
+  animation: slide-up-fade 0.3s ease-out forwards;
+}
+
+/* ---------------- Gradient Border Animation ---------------- */
+
+@keyframes gradient-rotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-border {
+  background-size: 200% 200%;
+  animation: gradient-rotate 3s ease infinite;
+}
+
+/* ---------------- Vignette ---------------- */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+
+  /* Light vignette (very subtle) */
+  background:
+    radial-gradient(1200px 900px at 50% 20%, rgba(0,0,0,0.00) 60%, rgba(0,0,0,0.06) 100%);
+}
+
+html.dark body::before {
+  background:
+    radial-gradient(1200px 900px at 50% 20%, rgba(0,0,0,0.00) 45%, rgba(0,0,0,0.20) 100%),
+    radial-gradient(900px 700px at 50% 120%, rgba(0,0,0,0.18), rgba(0,0,0,0.00) 55%);
+}
+
+/* ---------------- Aurora ---------------- */
+
+.bg-aurora {
+  position: fixed;
+  inset: -12%;
+  z-index: -2;
+  pointer-events: none;
+
+  filter: blur(70px);
+  animation:
+    aurora-drift 22s ease-in-out infinite,
+    hue 28s linear infinite;
+
+  background:
+    radial-gradient(650px 520px at 16% 18%, rgba(var(--a), 0.18), transparent 62%),
+    radial-gradient(720px 560px at 78% 22%, rgba(var(--b), 0.18), transparent 64%),
+    radial-gradient(700px 560px at 74% 84%, rgba(var(--d), 0.14), transparent 64%),
+    radial-gradient(680px 520px at 40% 88%, rgba(var(--c), 0.12), transparent 66%);
+}
+
+/* Dark aurora = glow */
+html.dark .bg-aurora {
+  opacity: 0.20;
+  mix-blend-mode: screen;
+}
+
+/* Light aurora = soft tint (BUT do not wash UI) */
+html:not(.dark) .bg-aurora {
+  opacity: 0.16;
+  mix-blend-mode: normal;
+}
+
+/* ---------------- Noise ---------------- */
+
+.noise {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+}
+
+html.dark .noise {
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+}
+
+html:not(.dark) .noise {
+  opacity: 0.020;
+  mix-blend-mode: normal;
+}
+
+/* ---------------- Utilities ---------------- */
+
+::selection {
+  background: rgba(103, 232, 249, 0.28);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@layer components {
+  .glass {
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  /* Dark glass */
+  html.dark .glass {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  /* Light glass (stronger + premium) */
+  html:not(.dark) .glass {
+    background: rgba(255, 255, 255, 0.86);
+    border: 1px solid rgba(15, 23, 42, 0.10);
+    box-shadow:
+      0 18px 60px rgba(15, 23, 42, 0.08),
+      0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+  }
+
+  .text-dim {
+    color: rgba(var(--fg), 0.74);
+  }
+
+  .text-faint {
+    color: rgba(var(--fg), 0.55);
+  }
+}
+
+/* Hover polish */
+[data-ink] {
+  transition:
+    transform 0.22s ease,
+    color 0.22s ease,
+    background-color 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    filter 0.22s ease;
+}
+[data-ink]:hover {
+  transform: translateY(-1px);
+  filter: saturate(1.1);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .bg-aurora,
+  .animate-hue,
+  .animate-shimmer,
+  .animate-ripple,
+  .animate-pulse-glow,
+  .animate-bounce-in,
+  .animate-slide-up-fade,
+  .animate-gradient-border {
+    animation: none !important;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* LIGHT MODE COMPAT LAYER (fix "dark-first Tailwind classes")        */
+/*    Goal: tanpa ubah JSX 1700 baris - cukup CSS override di light.  */
+/* ------------------------------------------------------------------ */
+
+html:not(.dark) {
+  /* pastikan default teks tidak ketimpa efek */
+  color: rgb(var(--fg));
+}
+
+/* 1) Tangkap SEMUA kelas yang mengandung text-white/.. di LIGHT */
+html:not(.dark) [class*="text-white/"] {
+  color: rgba(var(--fg), 0.78) !important;
+}
+
+/* Pemetaan opacity yang sering kamu pakai (biar tetap "feel" sama) */
+html:not(.dark) [class*="text-white/95"] { color: rgba(var(--fg), 0.92) !important; }
+html:not(.dark) [class*="text-white/90"] { color: rgba(var(--fg), 0.90) !important; }
+html:not(.dark) [class*="text-white/88"] { color: rgba(var(--fg), 0.88) !important; }
+html:not(.dark) [class*="text-white/85"] { color: rgba(var(--fg), 0.85) !important; }
+html:not(.dark) [class*="text-white/80"] { color: rgba(var(--fg), 0.80) !important; }
+html:not(.dark) [class*="text-white/75"] { color: rgba(var(--fg), 0.78) !important; }
+html:not(.dark) [class*="text-white/70"] { color: rgba(var(--fg), 0.72) !important; }
+html:not(.dark) [class*="text-white/60"] { color: rgba(var(--fg), 0.60) !important; }
+html:not(.dark) [class*="text-white/55"] { color: rgba(var(--fg), 0.54) !important; }
+html:not(.dark) [class*="text-white/50"] { color: rgba(var(--fg), 0.50) !important; }
+html:not(.dark) [class*="text-white/45"] { color: rgba(var(--fg), 0.46) !important; }
+html:not(.dark) [class*="text-white/40"] { color: rgba(var(--fg), 0.40) !important; }
+
+/* 2) bg-white/.. di LIGHT harus jadi surface, bukan "hilang" */
+html:not(.dark) [class*="bg-white/"] {
+  background-color: rgba(var(--card), 0.92) !important;
+}
+html:not(.dark) [class*="bg-white/5"]  { background-color: rgba(var(--card), 0.92) !important; }
+html:not(.dark) [class*="bg-white/10"] { background-color: rgba(var(--card), 0.90) !important; }
+html:not(.dark) [class*="bg-white/15"] { background-color: rgba(var(--card), 0.88) !important; }
+html:not(.dark) [class*="bg-white/20"] { background-color: rgba(var(--card), 0.86) !important; }
+
+/* 3) border-white/.. di LIGHT jadi stroke gelap halus */
+html:not(.dark) [class*="border-white/"] {
+  border-color: rgba(var(--stroke), 0.10) !important;
+}
+html:not(.dark) [class*="border-white/10"] { border-color: rgba(var(--stroke), 0.10) !important; }
+html:not(.dark) [class*="border-white/12"] { border-color: rgba(var(--stroke), 0.12) !important; }
+html:not(.dark) [class*="border-white/15"] { border-color: rgba(var(--stroke), 0.14) !important; }
+html:not(.dark) [class*="border-white/20"] { border-color: rgba(var(--stroke), 0.16) !important; }
+
+/* 4) Banyak panel kamu pakai bg-[#0b0c14]/.. (dark surface). Di LIGHT harus jadi card2 */
+html:not(.dark) [class*="bg-[#0b0c14]"] {
+  background-color: rgba(var(--card2), 0.92) !important;
+}
+
+/* 5) "glow / shadow" dark-first kadang terlalu kuat di light - halusin */
+html:not(.dark) [class*="shadow-["],
+html:not(.dark) [class*="shadow-lg"],
+html:not(.dark) [class*="shadow-md"] {
+  box-shadow:
+    0 18px 60px rgba(15, 23, 42, 0.10),
+    0 0 0 1px rgba(15, 23, 42, 0.06) inset !important;
+}
+
+/* 6) Select / input teks di light pastikan gelap */
+html:not(.dark) select,
+html:not(.dark) input,
+html:not(.dark) textarea {
+  color: rgba(var(--fg), 0.90);
+}
+html:not(.dark) select option {
+  color: rgb(var(--fg));
+}
+
+/* ============================================
+   PARTICLE BACKGROUND ENHANCEMENTS
+   ============================================ */
+
+/* Floating animation for elements */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-15px) rotate(-1deg);
+  }
+}
+
+/* Gentle drift animation */
+@keyframes drift {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(10px, -10px);
+  }
+  50% {
+    transform: translate(-5px, 5px);
+  }
+  75% {
+    transform: translate(-10px, -5px);
+  }
+}
+
+/* Aurora gradient shift animation */
+@keyframes aurora-shift {
+  0%, 100% {
+    background-position: 0% 0%, 100% 100%, 50% 50%;
+  }
+  33% {
+    background-position: 100% 0%, 0% 100%, 50% 0%;
+  }
+  66% {
+    background-position: 50% 100%, 50% 0%, 100% 50%;
+  }
+}
+
+/* ============================================
+   UTILITY CLASSES FOR ANIMATIONS
+   ============================================ */
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-drift {
+  animation: drift 15s ease-in-out infinite;
+}
+
+/* Stagger animations for children */
+.stagger-animation > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-animation > *:nth-child(2) { animation-delay: 100ms; }
+.stagger-animation > *:nth-child(3) { animation-delay: 200ms; }
+.stagger-animation > *:nth-child(4) { animation-delay: 300ms; }
+.stagger-animation > *:nth-child(5) { animation-delay: 400ms; }
+.stagger-animation > *:nth-child(6) { animation-delay: 500ms; }
+
+/* ============================================
+   GLASSMORPHISM ENHANCEMENTS
+   ============================================ */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+html.dark .glass-card {
+  background: rgba(11, 12, 20, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   GRADIENT TEXT EFFECTS
+   ============================================ */
+
+.gradient-text {
+  background: linear-gradient(135deg, #22d3ee, #a78bfa, #fb7185);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-animated {
+  background: linear-gradient(135deg, #22d3ee, #a78bfa, #fb7185, #22d3ee);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 8s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ============================================
+   HOVER EFFECTS FOR INTERACTIVE ELEMENTS
+   ============================================ */
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.2);
+}
+
+html.dark .hover-lift:hover {
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+.hover-glow {
+  transition: box-shadow 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+}
+
+/* ============================================
+   RESPONSIVE PARTICLE DENSITY
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Reduce visual complexity on mobile for performance */
+  .bg-aurora {
+    background: 
+      radial-gradient(ellipse at 30% 30%, rgba(var(--a), 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 70%, rgba(var(--b), 0.06) 0%, transparent 50%);
+  }
+  
+  .noise {
+    opacity: 0.02;
+  }
+}
+
+/* Reduce motion for accessibility - add particle classes */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-drift,
+  .gradient-text-animated {
+    animation: none !important;
+  }
+  
+  .hover-lift:hover {
+    transform: none;
+  }
+}
+
+/* ============================================
+   ANIMASI "GROUNDS" - 3 WARNA PREMIUM
+   (Cyan → Violet → Emerald)
+   ============================================ */
+
+@keyframes colorFlow {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animated-grounds {
+  background: linear-gradient(
+    110deg,
+    #06b6d4 0%,      /* Cyan-500 */
+    #8b5cf6 33%,     /* Violet-500 */
+    #10b981 66%,     /* Emerald-500 */
+    #06b6d4 100%     /* Back to Cyan */
+  );
+  background-size: 300% 300%;
+  animation: colorFlow 5s ease-in-out infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  display: inline-block;
+}
+
+/* Dark mode variant - lebih terang */
+html.dark .animated-grounds {
+  background: linear-gradient(
+    110deg,
+    #22d3ee 0%,      /* Cyan-400 */
+    #a78bfa 33%,     /* Violet-400 */
+    #34d399 66%,     /* Emerald-400 */
+    #22d3ee 100%
+  );
+  background-size: 300% 300%;
+  animation: colorFlow 5s ease-in-out infinite;
+}
+
+/* Disable animasi di reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animated-grounds {
+    animation: none !important;
+  }
+}
