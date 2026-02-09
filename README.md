@@ -15,7 +15,10 @@
 
 [![Try Grounds](https://img.shields.io/badge/Try%20it%20Now-grounds--chi.vercel.app-00D4AA?style=for-the-badge&logo=vercel&logoColor=white)](https://grounds-chi.vercel.app)
 
-### ▶️ [Youtube](https://youtu.be/auDm0d9Ea2o)
+### ▶️ [Video Demo](https://youtu.be/auDm0d9Ea2o)
+
+[![Try Grounds](https://img.shields.io/badge/Try%20Grounds-Watch%20on%20YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/auDm0d9Ea2o)
+
 
 [Features](#-features) • [Quick Start](#-quick-start) • [Architecture](#-how-it-works) • [API Reference](#-api-reference)
 
