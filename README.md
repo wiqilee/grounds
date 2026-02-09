@@ -7,6 +7,7 @@
 ![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Rust](https://img.shields.io/badge/Rust-WASM-DEA584?style=for-the-badge&logo=rust&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
 **Transform complex decisions into clear, auditable outcomes.**
 
@@ -530,7 +531,7 @@ Grounds is built for **anyone who makes consequential decisions**:
 | **AI Providers** | Google Gemini, OpenAI, Groq, OpenRouter | Multi-provider comparison |
 | **Vision AI** | Groq Llama 4 Scout | Document scanning, theme detection, sentiment |
 | **Scoring** | Rust → WASM | Deterministic quality scoring |
-| **PDF Export** | Playwright | Server-side PDF generation |
+| **Report Generation** | Python, Playwright | Server-side PDF/HTML report generation |
 | **Charts** | Custom SVG + CSS Animations | Data visualizations with dark/light mode |
 | **State** | LocalStorage | Client-side persistence |
 
