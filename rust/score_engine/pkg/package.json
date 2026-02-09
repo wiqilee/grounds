@@ -1,0 +1,11 @@
+{
+  "name": "score_engine",
+  "version": "0.1.0",
+  "files": [
+    "score_engine_bg.wasm",
+    "score_engine.js",
+    "score_engine.d.ts"
+  ],
+  "main": "score_engine.js",
+  "types": "score_engine.d.ts"
+}

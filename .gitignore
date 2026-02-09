@@ -25,3 +25,4 @@ pnpm-debug.log*
 # reports
 reports
 /tmp
+rust/score_engine/target/
