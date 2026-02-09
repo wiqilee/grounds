@@ -1,15 +1,17 @@
 // app/api/pdf/route.ts
 import { NextResponse } from "next/server";
-import { chromium, type Browser, type Page } from "playwright";
+import puppeteer, { type Browser } from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
 
-export const runtime = "nodejs"; // IMPORTANT: Playwright needs Node runtime
+export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const maxDuration = 60; // Vercel Pro: up to 60s, Hobby: 10s
 
 type Body = {
   html?: string;
   filename?: string;
-  timeoutMs?: number; // optional
-  retry?: number; // optional
+  timeoutMs?: number;
+  retry?: number;
 };
 
 function safeFilename(x: string | undefined) {
@@ -73,29 +75,41 @@ export async function POST(req: Request) {
     let browser: Browser | null = null;
 
     try {
+      // Get chromium executable path for serverless environment
+      const executablePath = await chromium.executablePath();
+
       browser = await withTimeout(
-        chromium.launch({
-          args: ["--no-sandbox", "--disable-setuid-sandbox"],
+        puppeteer.launch({
+          args: chromium.args,
+          defaultViewport: { width: 1200, height: 800 },
+          executablePath,
+          headless: true,
         }),
         timeoutMs,
         "browser launch timeout"
       );
 
-      const page: Page = await withTimeout(browser.newPage(), timeoutMs, "newPage timeout");
+      const page = await withTimeout(browser.newPage(), timeoutMs, "newPage timeout");
 
-      await withTimeout(page.setViewportSize({ width: 1200, height: 800 }), timeoutMs, "viewport timeout");
+      // Set content with timeout
+      await withTimeout(
+        page.setContent(html, { waitUntil: "domcontentloaded" }),
+        timeoutMs,
+        "setContent timeout"
+      );
 
-      // bounded content load
-      await withTimeout(page.setContent(html, { waitUntil: "domcontentloaded" }), timeoutMs, "setContent timeout");
-
-      // small bounded grace for network idle (optional)
+      // Wait for network idle (best-effort)
       try {
-        await withTimeout(page.waitForLoadState("networkidle", { timeout: 4_000 }), 6_000, "networkidle grace timeout");
+        await withTimeout(
+          page.waitForNetworkIdle({ idleTime: 500, timeout: 4_000 }),
+          6_000,
+          "networkidle grace timeout"
+        );
       } catch {
-        // ignore
+        // ignore - continue anyway
       }
 
-      // bounded fonts settle (best-effort)
+      // Wait for fonts (best-effort)
       try {
         await withTimeout(
           page.evaluate(async () => {
@@ -109,7 +123,7 @@ export async function POST(req: Request) {
           "fonts timeout"
         );
       } catch {
-        // ignore
+        // ignore - continue anyway
       }
 
       const footerTemplate = `
@@ -137,7 +151,7 @@ export async function POST(req: Request) {
         </div>
       `;
 
-      const pdf: Buffer = await withTimeout(
+      const pdf = await withTimeout(
         page.pdf({
           format: "A4",
           printBackground: true,
@@ -156,7 +170,7 @@ export async function POST(req: Request) {
         "pdf render timeout"
       );
 
-      // close browser (best-effort)
+      // Close browser (best-effort)
       try {
         await withTimeout(browser.close(), 8_000, "browser close timeout");
       } catch {
