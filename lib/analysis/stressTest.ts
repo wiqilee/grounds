@@ -478,7 +478,7 @@ export function parseStressTestResponse(
           combined_probability: clamp(safeNumber(rc.combined_probability, 50)),
         };
       })
-      .filter((rc): rc is RiskCorrelation => rc !== null && rc.risk_a && rc.risk_b),
+      .filter((rc): rc is RiskCorrelation => rc !== null && !!rc.risk_a && !!rc.risk_b),
     highest_risk_cluster: safeArray(pmRaw.highest_risk_cluster).map(String).filter(Boolean),
     single_point_of_failures: safeArray(pmRaw.single_point_of_failures).map(String).filter(Boolean),
     risk_diversity_score: clamp(safeNumber(pmRaw.risk_diversity_score, 50)),
@@ -557,14 +557,18 @@ export function safeJsonParse(text: string): unknown | null {
   // Try direct parse
   try {
     return JSON.parse(t);
-  } catch {}
+  } catch {
+    // Continue to other methods
+  }
 
   // Try to extract JSON from markdown code blocks
   const codeBlockMatch = t.match(/```(?:json)?\s*([\s\S]*?)```/);
   if (codeBlockMatch) {
     try {
       return JSON.parse(codeBlockMatch[1].trim());
-    } catch {}
+    } catch {
+      // Continue to other methods
+    }
   }
 
   // Try to find JSON object in text
@@ -574,7 +578,9 @@ export function safeJsonParse(text: string): unknown | null {
     const slice = t.slice(first, last + 1);
     try {
       return JSON.parse(slice);
-    } catch {}
+    } catch {
+      // Continue to fix attempt
+    }
     
     // Try to fix common JSON issues
     try {
@@ -585,7 +591,9 @@ export function safeJsonParse(text: string): unknown | null {
         .replace(/\n/g, "\\n")
         .replace(/\t/g, "\\t");
       return JSON.parse(fixed);
-    } catch {}
+    } catch {
+      // Give up
+    }
   }
 
   return null;
