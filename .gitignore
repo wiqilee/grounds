@@ -26,3 +26,4 @@ pnpm-debug.log*
 reports
 /tmp
 rust/score_engine/target/
+rust/score_engine/target/
