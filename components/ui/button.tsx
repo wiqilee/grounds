@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 
 type Variant = "primary" | "secondary" | "ghost" | "danger";
+type Size = "sm" | "md" | "lg";
 
 const styles: Record<Variant, string> = {
   primary:
@@ -15,9 +16,16 @@ const styles: Record<Variant, string> = {
     "bg-rose-400/10 border-rose-300/20 hover:bg-rose-400/14 hover:border-rose-300/30",
 };
 
+const sizeStyles: Record<Size, string> = {
+  sm: "px-2.5 py-1.5 text-[11px] rounded-xl",
+  md: "px-4 py-2.5 text-[13px] rounded-2xl",
+  lg: "px-6 py-3 text-[15px] rounded-2xl",
+};
+
 export function Button({
   children,
   variant = "secondary",
+  size = "md",
   className = "",
   onClick,
   type = "button",
@@ -26,8 +34,9 @@ export function Button({
 }: {
   children: React.ReactNode;
   variant?: Variant;
+  size?: Size;
   className?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   type?: "button" | "submit";
   disabled?: boolean;
   title?: string;
@@ -41,9 +50,10 @@ export function Button({
       whileHover={disabled ? undefined : { y: -1 }}
       whileTap={disabled ? undefined : { scale: 0.98 }}
       className={[
-        "group inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-2.5 text-[13px] font-medium",
+        "group inline-flex items-center justify-center gap-2 font-medium",
         "border transition disabled:opacity-50 disabled:cursor-not-allowed",
         styles[variant],
+        sizeStyles[size],
         className,
       ].join(" ")}
       data-ink

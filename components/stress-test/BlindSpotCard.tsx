@@ -5,7 +5,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, type MouseEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Shield,
@@ -347,7 +347,21 @@ ${mitigation ? `\nMitigation: ${mitigation.action}` : ""}
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
       onCopy?.(text);
-    } catch {}
+    } catch {
+      // Clipboard access denied - silently fail
+    }
+  };
+
+  const handleCopyClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    handleCopy();
+  };
+
+  const handleApplyClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    if (mitigation && onApplyMitigation) {
+      onApplyMitigation(mitigation);
+    }
   };
 
   return (
@@ -546,10 +560,7 @@ ${mitigation ? `\nMitigation: ${mitigation.action}` : ""}
                   variant="ghost"
                   size="sm"
                   className="h-7 px-2 text-[10px] text-white/50 hover:text-white/80"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleCopy();
-                  }}
+                  onClick={handleCopyClick}
                 >
                   {copied ? (
                     <Check className="w-3 h-3 mr-1 text-emerald-400" />
@@ -563,10 +574,7 @@ ${mitigation ? `\nMitigation: ${mitigation.action}` : ""}
                     variant="ghost"
                     size="sm"
                     className="h-7 px-2 text-[10px] text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onApplyMitigation(mitigation);
-                    }}
+                    onClick={handleApplyClick}
                   >
                     <ArrowRight className="w-3 h-3 mr-1" />
                     Apply
