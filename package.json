@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "wasm:build": "cd rust/score_engine && wasm-pack build --target nodejs --release --out-dir pkg",
-    "build": "npm run wasm:build && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "report:html": "tsx scripts/report-from-json.ts --in ./sample/ledger.json --out ./out/grounds-report.html",
